@@ -20,20 +20,24 @@ module Shellout
   
       out.print '┌' << separators.join('┬') << "┐\n"
       @data.each_with_index do |r, i|
-        if @has_footers and i == @data.size-1
-          out.print '├' << separators.join('┼') << "┤\n"
-        end
         if @has_headers and i == 0
-          out.print '│ ' << r.zip(widths).map {|s,l| s.center(l)}.join(' │ ') << " │\n"
+          out.print '│ ' << center(r).join(' │ ') << " │\n"
           out.print '├' << separators.join('┼') << "┤\n"
+        elsif @has_footers and i == @data.size-1
+          out.print '├' << separators.join('┼') << "┤\n"
+          out.print '│ ' << r.join(' │ ') << " │\n"          
         else
-          out.print '│ ' << r.to_a.join(' │ ') << " │\n"          
+          out.print '│ ' << r.join(' │ ') << " │\n"          
         end
       end
       out.print '└' << separators.join('┴') << "┘\n"
     end
     
     private
+
+    def center(row)
+      row.zip(widths).map {|s,l| s.center(l)}      
+    end
     
     def widths
       @widths ||= @data.transpose.map {|v| v.map(&:size).max }
