@@ -1,0 +1,4 @@
+rspec
+guard
+guard-rspec
+rb-fsevent
