@@ -17,7 +17,8 @@ module Shellout
       return if @data.empty?
       
       separators = widths.map {|w| '─'*(w+2)}
-  
+      format = build_format
+      
       out.print '┌' << separators.join('┬') << "┐\n"
       @data.each_with_index do |r, i|
         if @has_headers and i == 0
@@ -25,9 +26,9 @@ module Shellout
           out.print '├' << separators.join('┼') << "┤\n"
         elsif @has_footers and i == @data.size-1
           out.print '├' << separators.join('┼') << "┤\n"
-          out.print '│ ' << r.join(' │ ') << " │\n"          
+          out.printf(format, *r)          
         else
-          out.print '│ ' << r.join(' │ ') << " │\n"          
+          out.printf(format, *r)          
         end
       end
       out.print '└' << separators.join('┴') << "┘\n"
@@ -40,27 +41,23 @@ module Shellout
     end
     
     def widths
-      @widths ||= @data.transpose.map {|v| v.map(&:size).max }
+      @widths ||= @data.transpose.map {|c| c.map(&:size).max }
     end
     
-    def build_format(lengths)
-      #
-      #is_column_left_justified = Array.new(lengths.count, false)
-      #
-      #@data.row_vectors.each do |r|
-      #  r.each do |c|
-      #    if !r[c].strip.empty? && !r[c].match(/^\d+[:.,]?\d*$/)
-      #      is_column_left_justified[c] = true
-      #    end
-      #  end
-      #end
-      #
-      #lengths.reduce('│') do |f, l|
-      #    justify = is_column_left_justified.shift ? '-' : ''
-      #    f + " %#{justify}#{l}s │"
-      #  end + "\n"
-      #end
-      #
+    def build_format
+      data = @data.clone
+      data.shift if @has_headers
+      
+      numeric_columns = data.transpose.map do |col|
+        col.reduce(true) do |is_numeric, c|
+          is_numeric &&= c.match(/\d+[:.,]?\d*$/)
+        end
+      end
+      
+      format = widths.reduce('│') do |f, l|
+        justify = numeric_columns.shift ? '' : '-'
+        f + " %#{justify}#{l}s │"
+      end + "\n"
     end
   end
 end

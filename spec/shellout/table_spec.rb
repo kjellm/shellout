@@ -60,4 +60,32 @@ EOT
     @out.string.each_line.to_a[1].should == "│  a  │  b  │  c  │\n"
   end
   
+  it 'should_right_justify_numbers' do
+    Shellout::Table.new(headers: %w{aaaa bb ccc}, rows: [%w{123 4 56}]).print(@out)
+    @out.string.should == <<'EOT'
+┌──────┬────┬─────┐
+│ aaaa │ bb │ ccc │
+├──────┼────┼─────┤
+│  123 │  4 │  56 │
+└──────┴────┴─────┘
+EOT
+  end
+  
+  it 'should handle an example with some "real" data' do
+    Shellout::Table.new(
+      headers: %w{project code hours price},
+      rows:    [%w{nice_project_1 a 7:30 100.00}, %w{nice_project_2 b 7:30 87.50}],
+      footers: %w{Sum - 15:00 187.50},
+    ).print(@out)
+    @out.string.should == <<'EOT'
+┌────────────────┬──────┬───────┬────────┐
+│    project     │ code │ hours │ price  │
+├────────────────┼──────┼───────┼────────┤
+│ nice_project_1 │ a    │  7:30 │ 100.00 │
+│ nice_project_2 │ b    │  7:30 │  87.50 │
+├────────────────┼──────┼───────┼────────┤
+│ Sum            │ -    │ 15:00 │ 187.50 │
+└────────────────┴──────┴───────┴────────┘
+EOT
+  end
 end    
