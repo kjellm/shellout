@@ -41,7 +41,7 @@ module Shellout
     end
     
     def widths
-      @widths ||= @data.transpose.map {|c| c.map(&:size).max }
+      @widths ||= @data.transpose.map {|c| c.map(&:to_s).map(&:size).max }
     end
     
     def build_format
@@ -50,7 +50,7 @@ module Shellout
       
       numeric_columns = data.transpose.map do |col|
         col.reduce(true) do |is_numeric, c|
-          is_numeric &&= c.match(/\d+[:.,]?\d*$/)
+          is_numeric &&= c.is_a?(Numeric) || c.match(/\d+[:.,]?\d*$/)
         end
       end
       
