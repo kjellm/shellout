@@ -1,6 +1,9 @@
 Shellout
 ========
 
+Shellout is a collection of tools for writing user interfaces for the terminal. It contains classes for
+printing tables and boxes, using unicode box drawing and block element characters.
+
 Usage
 -----
 
