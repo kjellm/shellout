@@ -2,10 +2,11 @@
 
 Gem::Specification.new do |s|
   s.name        = "shellout"
-  s.version     = "0.1"
+  s.version     = "0.2"
   s.authors     = ["Kjell-Magne Øierud"]
   s.email       = ["kjellm@acm.org"]
   s.homepage    = "https://github.com/kjellm/shellout"
+  s.license     = "MIT"
   s.summary     = %q{Tools for writing terminal interfaces}
   s.description = %q{Contains classes for printing tables and boxes}
   
