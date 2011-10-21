@@ -12,11 +12,12 @@ describe Shellout::Shadowbox do
   describe 'when title is empty' do
     it 'should print an empty box' do
       @box = Shellout::Shadowbox.new('')
-      x = "" <<
-      "┌──────────────────────────────────────────┐ \n" <<
-      "│                                          │▒\n" <<
-      "└──────────────────────────────────────────┘▒\n" <<
-      "  ▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒\n"
+      x = <<EOB
+┌──────────────────────────────────────────┐ 
+│                                          │▒
+└──────────────────────────────────────────┘▒
+  ▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒
+EOB
       @box.print(@out)
       @out.string.should == x
     end
@@ -25,11 +26,12 @@ describe Shellout::Shadowbox do
   describe 'when a short title is given' do
     it 'should print a padded box with centered title' do
       @box = Shellout::Shadowbox.new('short')
-      x = "" <<
-      "┌──────────────────────────────────────────┐ \n" <<
-      "│                  short                   │▒\n" <<
-      "└──────────────────────────────────────────┘▒\n" <<
-      "  ▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒\n"
+      x = <<EOB
+┌──────────────────────────────────────────┐ 
+│                  short                   │▒
+└──────────────────────────────────────────┘▒
+  ▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒
+EOB
       @box.print(@out)
       @out.string.should == x
     end
@@ -38,11 +40,12 @@ describe Shellout::Shadowbox do
   describe 'when a long title is given' do
     it 'should print a box that is big enough' do
       @box = Shellout::Shadowbox.new('a very extremely humongously large meaningless title')
-      x = "" <<
-      "┌──────────────────────────────────────────────────────┐ \n" <<
-      "│ a very extremely humongously large meaningless title │▒\n" <<
-      "└──────────────────────────────────────────────────────┘▒\n" <<
-      "  ▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒\n"
+      x = <<EOB
+┌──────────────────────────────────────────────────────┐ 
+│ a very extremely humongously large meaningless title │▒
+└──────────────────────────────────────────────────────┘▒
+  ▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒
+EOB
       @box.print(@out)
       @out.string.should == x
     end
