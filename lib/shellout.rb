@@ -18,4 +18,8 @@
 # U+259x ▐ ░ ▒ ▓ ▔ ▕ ▖ ▗ ▘ ▙ ▚ ▛ ▜ ▝ ▞ ▟
 
 module Shellout
+  
+  autoload :Shadowbox, 'shellout/shadowbox'
+  autoload :Table,     'shellout/table'
+  
 end
