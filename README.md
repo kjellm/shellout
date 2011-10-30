@@ -48,6 +48,18 @@ Usage
 	# └───────────┴────────┘
 
 
+Bugs
+----
+
+Report bugs to <http://github.com/kjellm/shellout/issues>
+
+
+Author
+------
+
+Kjell-Magne Øierud &lt;kjellm AT acm DOT org&gt;
+
+
 License
 -------
 
