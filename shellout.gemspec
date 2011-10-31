@@ -1,8 +1,10 @@
 # encoding: utf-8
+$:.push File.expand_path("../lib", __FILE__)
+require 'shellout/version'
 
 Gem::Specification.new do |s|
   s.name        = "shellout"
-  s.version     = "0.2"
+  s.version     = Shellout::VERSION
   s.authors     = ["Kjell-Magne Øierud"]
   s.email       = ["kjellm@acm.org"]
   s.homepage    = "https://github.com/kjellm/shellout"

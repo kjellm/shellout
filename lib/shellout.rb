@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 
 # Unicode box drawing characters and block elements
 #
@@ -18,7 +19,8 @@
 # U+259x ▐ ░ ▒ ▓ ▔ ▕ ▖ ▗ ▘ ▙ ▚ ▛ ▜ ▝ ▞ ▟
 
 module Shellout
-  
+
+  autoload :Calendar,  'shellout/calendar'
   autoload :Shadowbox, 'shellout/shadowbox'
   autoload :Table,     'shellout/table'
   
