@@ -52,9 +52,9 @@ Usage
     require 'date'
     require 'shellout/calendar'
     
-    Date.today.to_s # => "2011-10-31"
+    today = Date.today # => "2011-10-31"
 
-    Shellout::Calendar.new(Date.new(2011, 10)).print
+    Shellout::Calendar.new(today).print
     
     #     October 2011    
     # Mo Tu We Th Fr Sa Su
@@ -65,7 +65,6 @@ Usage
     # 24 25 26 27 28 29 30
     # 31
     
-    today = Date.today
     Shellout::Calendar.new(today.prev_month,
                            today,
                            today.next_month).print
