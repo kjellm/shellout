@@ -35,8 +35,7 @@ Usage
 	                    rows: [['Man City', 22],
 	                           ['Man Utd', 20],
 	                           ['Chelsea', 19],
-	                           ['Newcastle', 16]]
-	).print
+	                           ['Newcastle', 16]]).print
 	
 	# ┌───────────┬────────┐
 	# │   Team    │ Points │
@@ -64,7 +63,7 @@ Usage
     # 10 11 12 13 14 15 16
     # 17 18 19 20 21 22 23
     # 24 25 26 27 28 29 30
-    # <span style="background-color: black; color: whit">31
+    # 31
     
     today = Date.today
     Shellout::Calendar.new(today.prev_month,
@@ -78,7 +77,7 @@ Usage
     # 12 13 14 15 16 17 18    10 11 12 13 14 15 16    14 15 16 17 18 19 20
     # 19 20 21 22 23 24 25    17 18 19 20 21 22 23    21 22 23 24 25 26 27
     # 26 27 28 29 30          24 25 26 27 28 29 30    28 29 30
-    #                         <span style="background-color: black; color: white">31</span>
+    #                         31
 
 Bugs
 ----
