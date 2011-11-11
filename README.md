@@ -53,10 +53,10 @@ Usage
     require 'shellout/calendar'
     
     today = Date.today # => "2011-10-31"
-
+    
     Shellout::Calendar.new(today).print
     
-    #     October 2011    
+    #     October 2011
     # Mo Tu We Th Fr Sa Su
     #                 1  2
     #  3  4  5  6  7  8  9
@@ -65,11 +65,10 @@ Usage
     # 24 25 26 27 28 29 30
     # 31
     
-    Shellout::Calendar.new(today.prev_month,
-                           today,
-                           today.next_month).print
-
-    #    September 2011           October 2011           November 2011
+    Shellout::Calendar.new(today).print3
+    
+    #                                 2011
+    #      September                October                 November
     # Mo Tu We Th Fr Sa Su    Mo Tu We Th Fr Sa Su    Mo Tu We Th Fr Sa Su
     #           1  2  3  4                    1  2        1  2  3  4  5  6
     #  5  6  7  8  9 10 11     3  4  5  6  7  8  9     7  8  9 10 11 12 13
