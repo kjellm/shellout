@@ -1,76 +1,73 @@
+require 'date'
+
 module Shellout
   class Calendar
     
-    def initialize(*dates)
-      @dates = dates
+    def initialize(date=Date.today)
+      @date = date
       @list_of_days = "Mo Tu We Th Fr Sa Su"
-      reset
     end
     
     def print(out=$stdout)
-      @out=out
-      @dates.each do |d|
-        print_calendar(d)
-        unless d == @dates.last # FIXME
-          @col += 24
-          @out.print ansi_cursor_up(@lines) + ansi_cursor_right(@col)
-          @lines = 1
+      print_helper(out, Array(@date))
+    end
+    
+    def print3(out=$stdout)
+      print_helper(out, [@date.prev_month, @date, @date.next_month])
+    end
+    
+    private
+    
+    def print_helper(out, dates)
+      foo = dates.map do |for_date|
+        bar = days(for_date)
+        if is_current_month?(for_date)
+          bar.map! {|d| d == Date.today.day  ? ansi_reverse_color(d) : d}
         end
+        bar
       end
-      reset
-      #puts
+      first_year = dates.first.year
+      same_year = dates.reduce(true) {|res, d| res && d.year == first_year}
+      if same_year and dates.length > 1
+        out.puts first_year.to_s.center((@list_of_days.length + 2) * (dates.length)  -  2)
+      end
+      dates.each do |for_date|
+        head = Date::MONTHNAMES[for_date.month]
+        head += " #{for_date.year}" if dates.length == 1 or !same_year
+        out.print head.center(@list_of_days.length)
+        out.print "  "
+      end
+      out.puts
+      dates.each do |for_date|
+        out.print @list_of_days
+        out.print "  "
+      end
+      out.puts
+      i = 0
+      while true
+        exhausted = 0
+        foo.each do |bar|
+          if i >= bar.length
+            exhausted += 1
+          else
+            week = bar[i..i+6]
+            week += Array.new(7 - week.length, "")
+            out.print week.map {|s| "%2s" % s}.join " "
+            out.print "  "
+          end
+        end
+        break if exhausted == foo.length
+        i += 7
+        out.puts
+      end
     end
 
     private
-      
-    def reset
-      @lines = 1
-      @col   = 0
-    end
-    
-    def print_calendar(for_date)
-      print_heading(for_date)
-      print_dates(for_date)
-    end
-
-    def print_heading(for_date)
-      print_line("#{Date::MONTHNAMES[for_date.month]} #{for_date.year}".center(@list_of_days.length))
-      print_line(@list_of_days)
-    end
-    
-    def print_dates(for_date)
-      week = []
-      days(for_date).each_with_index do |d, i|
-        d = is_current_month?(for_date) && d == Date.today.day \
-          ? ansi_reverse_color(d) : d
-        week << "%2s" % d 
-        if end_of_week?(i)
-          print_week(week)
-          week = []
-        end
-      end
-      print_week(week) unless week.empty?
-      @out.puts
-    end
-
-    def print_week(week)
-      print_line week.join(' ')
-    end
-    
-    def end_of_week?(i)
-      (i+1) % 7 == 0
-    end
     
     def is_current_month?(date)
       Date.today.month == date.month
     end
-  
-    def print_line(s="")
-      @lines += 1
-      @out.print s
-      @out.print @col == 0 ? "\n" : ansi_cursor_down(1) + ansi_cursor_left(@list_of_days.length)
-    end
-
+    
     def days(for_date)
       first_day_of_month = Date.new(for_date.year, for_date.month)
       days = (1..last_day_of_month(first_day_of_month).day).to_a
@@ -85,10 +82,6 @@ module Shellout
     
     def ansi_reverse_color(s); "\e[7m#{s}\e[0m"; end
     
-    def ansi_cursor_up(n);    "\e[#{n}A"; end
-    def ansi_cursor_down(n);  "\e[#{n}B"; end
-    def ansi_cursor_left(n);  "\e[#{n}D"; end
-    def ansi_cursor_right(n); "\e[#{n}C"; end
     
   end
 end
