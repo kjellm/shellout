@@ -1,9 +1,11 @@
 # encoding: utf-8
 
 require 'stringio'
-require 'shellout/shadowbox'
+require 'shellout'
 
 describe Shellout::Shadowbox do
+
+  include Shellout
 
   before(:each) do
     @out = StringIO.new
@@ -11,7 +13,7 @@ describe Shellout::Shadowbox do
   
   describe 'when title is empty' do
     it 'should print an empty box' do
-      @box = Shellout::Shadowbox.new('')
+      @box = Shadowbox('')
       x = <<EOB
 ┌──────────────────────────────────────────┐ 
 │                                          │▒
@@ -25,7 +27,7 @@ EOB
   
   describe 'when a short title is given' do
     it 'should print a padded box with centered title' do
-      @box = Shellout::Shadowbox.new('short')
+      @box = Shadowbox('short')
       x = <<EOB
 ┌──────────────────────────────────────────┐ 
 │                  short                   │▒
@@ -39,7 +41,7 @@ EOB
   
   describe 'when a long title is given' do
     it 'should print a box that is big enough' do
-      @box = Shellout::Shadowbox.new('a very extremely humongously large meaningless title')
+      @box = Shadowbox('a very extremely humongously large meaningless title')
       x = <<EOB
 ┌──────────────────────────────────────────────────────┐ 
 │ a very extremely humongously large meaningless title │▒

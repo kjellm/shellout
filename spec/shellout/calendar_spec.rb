@@ -1,6 +1,6 @@
 require 'date'
 require 'stringio'
-require 'shellout/calendar'
+require 'shellout'
 
 class Date
   def self.today
@@ -10,6 +10,8 @@ end
 
 describe Shellout::Calendar do
 
+  include Shellout
+  
   before(:each) do
     @out = StringIO.new
   end
@@ -17,7 +19,7 @@ describe Shellout::Calendar do
   describe 'print' do
 
     it 'should print a calendar for the given month' do
-      Shellout::Calendar.new(Date.new(2011, 7)).print(@out)
+      Calendar(Date.new(2011, 7)).print(@out)
       res = @out.string.gsub(/\s+\n/, "\n")
       res.should == <<EOC
      July 2011
@@ -32,7 +34,7 @@ EOC
     end
 
     it 'should print a calendar for this month when no date given' do
-      Shellout::Calendar.new().print(@out)
+      Calendar().print(@out)
       res = @out.string.gsub(/\s+\n/, "\n")
       res.should == <<EOC
     October 2011
@@ -48,7 +50,7 @@ EOC
 
   describe 'print3' do
     it 'should print the months before, at given, and after. Year on a separate line' do
-      Shellout::Calendar.new(Date.new(2011, 8)).print3(@out)
+      Calendar(Date.new(2011, 8)).print3(@out)
       res = @out.string.gsub(/\s+\n/, "\n")
       res.should == <<EOC
                               2011
@@ -63,7 +65,7 @@ EOC
     end
 
     it 'Should print year together with month names when not same year' do
-      Shellout::Calendar.new(Date.new(2011, 12)).print3(@out)
+      Calendar(Date.new(2011, 12)).print3(@out)
       res = @out.string.gsub(/\s+\n/, "\n")
       res.should == <<EOC
    November 2011         December 2011          January 2012
