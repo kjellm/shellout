@@ -14,47 +14,41 @@ Install
 Usage
 -----
 
+    require 'shellout'
+    include Shellout
+
 ### Shadowboxes
 
-
-    require 'shellout/shadowbox'
-    
-    Shellout::Shadowbox.new("Hello world").print
+    Shadowbox("Hello world").print
     
     # ┌──────────────────────────────────────────┐ 
     # │               Hello world                │▒
     # └──────────────────────────────────────────┘▒
     #   ▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒
 
-
 ### Tables
 
-    require 'shellout/table'
-    
-    Shellout::Table.new(headers: %w{Team Points},
-	                    rows: [['Man City', 22],
-	                           ['Man Utd', 20],
-	                           ['Chelsea', 19],
-	                           ['Newcastle', 16]]).print
+    Table(headers: %w{Team Points},
+	        rows: [['Man City', 22],
+	               ['Man Utd', 20],
+	               ['Chelsea', 19],
+	               ['Newcastle', 16]]).print
 	
-	# ┌───────────┬────────┐
-	# │   Team    │ Points │
-	# ├───────────┼────────┤
-	# │ Man City  │     22 │
-	# │ Man Utd   │     20 │
-	# │ Chelsea   │     19 │
-	# │ Newcastle │     16 │
-	# └───────────┴────────┘
-
+    # ┌───────────┬────────┐
+    # │   Team    │ Points │
+    # ├───────────┼────────┤
+    # │ Man City  │     22 │
+    # │ Man Utd   │     20 │
+    # │ Chelsea   │     19 │
+    # │ Newcastle │     16 │
+    # └───────────┴────────┘
+  
 
 ### Calendars
 
-    require 'date'
-    require 'shellout/calendar'
-    
     today = Date.today # => "2011-10-31"
     
-    Shellout::Calendar.new(today).print
+    Calendar(today).print
     
     #     October 2011
     # Mo Tu We Th Fr Sa Su
@@ -65,7 +59,7 @@ Usage
     # 24 25 26 27 28 29 30
     # 31
     
-    Shellout::Calendar.new(today).print3
+    Calendar(today).print3
     
     #                                 2011
     #      September                October                 November
@@ -76,6 +70,37 @@ Usage
     # 19 20 21 22 23 24 25    17 18 19 20 21 22 23    21 22 23 24 25 26 27
     # 26 27 28 29 30          24 25 26 27 28 29 30    28 29 30
     #                         31
+
+
+### Menus
+
+    Menu([
+      "Do this",
+      "No, this",
+      "Or, maybe this",
+      "Forget it, this is the right choice",
+      "Amazing things will happen if you choose this",
+      "Ignore #5. Pick me!",
+      "I'm the obvious choice",
+      "There is no end to the awesomeness that will come from choosing this",
+      "Don't choose this",
+      "Or this",
+      "Things are getting worse",
+      "Might as well choose this one",
+    ]).print
+    
+    #  1. Do this
+    #  2. No, this
+    #  3. Or, maybe this
+    #  4. Forget it, this is the right choice
+    #  5. Amazing things will happen if you choose this
+    #  6. Ignore #5. Pick me!
+    #  7. I'm the obvious choice
+    #  8. There is no end to the awesomeness that will come from choosing this
+    #  9. Don't choose this
+    # 10. Or this
+    # 11. Things are getting worse
+    # 12. Might as well choose this one
 
 Bugs
 ----

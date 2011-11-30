@@ -19,6 +19,7 @@
 # U+259x ▐ ░ ▒ ▓ ▔ ▕ ▖ ▗ ▘ ▙ ▚ ▛ ▜ ▝ ▞ ▟
 
 require 'shellout/calendar'
+require 'shellout/menu'
 require 'shellout/shadowbox'
 require 'shellout/table'
 
@@ -39,6 +40,11 @@ module Shellout
   # See doc for Shellout::Table.new
   def Table(*whatever)
     Shellout::Table.new(*whatever)
+  end
+  
+  # See doc for Shellout::Menu.new
+  def Menu(*whatever)
+    Shellout::Menu.new(*whatever)
   end
   
 end
