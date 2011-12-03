@@ -29,7 +29,7 @@ class Task
   def method_missing(name, *args)
     super unless name =~ /=$/ # FIXME
     name = name.to_s.chop
-    @sub_tasks[name] = args.first
+    @sub_tasks[name.to_sym] = args.first
   end
   
   def confirm
@@ -38,6 +38,12 @@ class Task
       ask("Confirm (y|n)")
     end
     @sub_tasks['confirm'] = obj
+  end
+
+  def summary(format)
+    @sub_tasks['summary'] = -> do
+      printf(format, @results)
+    end
   end
   
   def execute
@@ -113,12 +119,13 @@ end
 class TextQuery
 
   def initialize(question='', default=nil)
-    @question = question
-    @default  = default.nil? ? '' : "[#{default}]"
+    @question = question + (default.nil? ? '' : "[#{default}]")
+    @default  = default
   end
 
   def execute
     answer = ask("#@question#@default")
+    return answer == '' ? @default : answer
   end
 
 end
@@ -149,6 +156,7 @@ class App
     Task.new do |t|
       t.dish     = Shellout::MenuQuery.new(dishes)
       t.quantity = TextQuery.new('How many?', 1)
+      t.summary("%{quantity} %{dish} added to your order\n")
     end
   end
   
