@@ -1,3 +1,12 @@
+2011-12-03: version 0.4
+
+ - Added a class for printing menus
+ 
+ - Changed the calendar to not use ansi escapes when printing multiple calendars
+ 
+ - Added shortcuts for creating menus, calendars, tables, and shadowboxes that
+   can be mixed in.
+
 2011-10-31: version 0.3
 
  - Added a class for printing calendars
