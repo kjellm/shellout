@@ -1,3 +1,5 @@
+[![Build Status](https://secure.travis-ci.org/kjellm/shellout.png)](http://travis-ci.org/kjellm/shellout)
+
 Shellout
 ========
 
