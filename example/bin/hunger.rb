@@ -23,6 +23,7 @@ class Task
 
   def initialize
     @sub_tasks = {}
+    @on_execute_done = ->{}
     yield self
   end
   
@@ -40,18 +41,22 @@ class Task
     @sub_tasks['confirm'] = obj
   end
 
-  def summary(format)
+  def printf(format)
     @sub_tasks['summary'] = -> do
-      printf(format, @results)
+      super(format, @results)
     end
+  end
+  
+  def on_execute_done(&callback)
+    @on_execute_done = callback
   end
   
   def execute
     @results = {}
     @sub_tasks.each do |k, v|
       @results[k] = v.execute
-      p @results
     end
+    @on_execute_done.call
   end
   
 end
@@ -152,11 +157,18 @@ end
 
 class App
 
+  def initialize
+    @session = []
+  end
+
   def define_course_task(dishes)
     Task.new do |t|
       t.dish     = Shellout::MenuQuery.new(dishes)
       t.quantity = TextQuery.new('How many?', 1)
-      t.summary("%{quantity} %{dish} added to your order\n")
+      t.printf("%{quantity} %{dish} added to your order\n")
+      t.on_execute_done do
+        @session << t
+      end
     end
   end
   
@@ -170,18 +182,26 @@ class App
       t.date = DateQuery.new
       t.name = TextQuery.new("Your name")
       t.confirm
+      t.on_execute_done do
+        @session = []
+      end
     end
     
-    order_history_task = ->do
-      Table(headers: %w(date name dishes_ordered)).print
+    view_order_task = ->do
+      #FIXME ugly
+      rows = @session.map do |t|
+        [t.instance_variable_get(:@results)[:quantity], t.instance_variable_get(:@results)[:dish]]
+      end
+      Table(headers: %w(quantity dish), rows: rows).print
+      p @session
     end
     
     main_menu = Shellout::MenuQuery.new({
       "Starters"      => starters_task,
       "Main courses"  => main_course_task,
       "Desserts"      => desserts_task,
+      "View Order"    => view_order_task,
       "Checkout"      => checkout_task,
-      "Order History" => order_history_task,
       "Exit"          => ->{ exit }
     })
     

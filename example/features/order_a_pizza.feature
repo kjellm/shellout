@@ -9,4 +9,4 @@ Feature: Order a Pizza
      And I choose Pizza from the main course menu
      And I choose the default quantity
      And I quit 
-    Then I shall see "1 Pizza added to your order"
+    Then I should see "1 Pizza added to your order"

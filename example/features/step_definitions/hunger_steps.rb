@@ -19,8 +19,8 @@ Then /^I shall see the main menu$/ do
      1. Starters
      2. Main courses
      3. Desserts
-     4. Checkout
-     5. Order History
+     4. View Order
+     5. Checkout
      6. Exit
     """
     }
@@ -42,6 +42,30 @@ When /^I choose the default quantity$/ do
   steps %{When I type ""}
 end
 
-Then /^I shall see "([^"]*)"$/ do |arg1|
+Then /^I should see "([^"]*)"$/ do |arg1|
   steps %{Then the stdout should contain "#{arg1}"}
+end
+
+Given /^I order (\d+) Pizza$/ do |quantity|
+  steps %{
+    When I type "2"
+    When I type "1"
+    When I type "#{quantity}"
+  }
+end
+
+Given /^I order (\d+) Gelato$/ do |quantity|
+  steps %{
+    When I type "3"
+    When I type "1"
+    When I type "#{quantity}"
+  }
+end
+
+Given /^I choose to view ordered dishes$/ do
+  steps %{When I type "4"}
+end
+
+Then /^I should see:$/ do |string|
+  steps %{Then the stdout should contain "#{string}"}
 end
