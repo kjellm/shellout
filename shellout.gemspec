@@ -15,14 +15,4 @@ Gem::Specification.new do |s|
   s.files         = `git ls-files`.split("\n")
   s.test_files    = `git ls-files -- spec/*`.split("\n")
   s.require_paths = ["lib"]
-
-  s.add_development_dependency "rspec"
-  s.add_development_dependency "guard"
-  s.add_development_dependency "guard-rspec"
-  s.add_development_dependency "rake"
-
-  if RUBY_PLATFORM.downcase.include?("darwin")
-    s.add_development_dependency 'rb-fsevent'
-    s.add_development_dependency 'growl_notify'
-  end
 end
