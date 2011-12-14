@@ -1,8 +1,9 @@
 module Shellout
   class Menu
     
-    def initialize(items)
-      @items = items
+    def initialize(items, zero_item=nil)
+      @items     = items
+      @zero_item = zero_item
     end
     
     def padding; 1; end
@@ -12,6 +13,7 @@ module Shellout
       @items.each_with_index do |item, i|
         out.printf format, i+1, item
       end
+      out.printf format, 0, @zero_item unless @zero_item.nil?
     end
 
     private

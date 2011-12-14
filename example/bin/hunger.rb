@@ -2,13 +2,15 @@
 
 require 'shellout'
 require 'shellout/menu_query'
+require 'shellout/task'
+require 'shellout/query'
 
 include Shellout
 
 require 'readline'
 
-# FIXME rename execute to call everywhere? think execute communicates the meaning more preciesly
-Proc.send(:alias_method, :execute, :call)
+# FIXME rename call to call everywhere? think call communicates the meaning more preciesly
+Proc.send(:alias_method, :call, :call)
 
 def text_effect(code, text); "\e[#{code}m#{text}\e[0m"; end
 
@@ -19,56 +21,13 @@ def ask(question='')
   answer.strip
 end
 
-class Task
-
-  def initialize
-    @sub_tasks = {}
-    @on_execute_done = ->{}
-    yield self
-  end
-  
-  def method_missing(name, *args)
-    super unless name =~ /=$/ # FIXME
-    name = name.to_s.chop
-    @sub_tasks[name.to_sym] = args.first
-  end
-  
-  def confirm
-    obj = ->do
-      p @results
-      ask("Confirm (y|n)")
-    end
-    @sub_tasks['confirm'] = obj
-  end
-
-  def printf(format)
-    @sub_tasks['summary'] = -> do
-      super(format, @results)
-    end
-  end
-  
-  def on_execute_done(&callback)
-    @on_execute_done = callback
-  end
-  
-  def execute
-    @results = {}
-    @sub_tasks.each do |k, v|
-      @results[k] = v.execute
-    end
-    @on_execute_done.call
-  end
-  
-end
-
-
 class DateQuery
    
-   def execute
+   def call
      answer = ask("Date ([today] | ?)")
      if answer == '?'
        print_help
-       return execute
+       return call
      end
      DateParser.parse(answer)
    end
@@ -121,32 +80,17 @@ class DateParser
 end
  
 
-class TextQuery
-
-  def initialize(question='', default=nil)
-    @question = question + (default.nil? ? '' : "[#{default}]")
-    @default  = default
-  end
-
-  def execute
-    answer = ask("#@question#@default")
-    return answer == '' ? @default : answer
-  end
-
-end
-
-
 class CommandLoop
   
   def initialize(menu)
     @menu = menu
   end
   
-  def execute
+  def call
     loop do
       begin
-        task = @menu.execute
-        task.execute
+        task = @menu.call
+        task.call
       rescue Interrupt    # ^C
         puts              # Add a new line in case we are prompting
       end
@@ -163,10 +107,10 @@ class App
 
   def define_course_task(dishes)
     Task.new do |t|
-      t.dish     = Shellout::MenuQuery.new(dishes)
-      t.quantity = TextQuery.new('How many?', 1)
+      t.dish     = MenuQuery.new(dishes)
+      t.quantity = Query.new('How many?', 1)
       t.printf("%{quantity} %{dish} added to your order\n")
-      t.on_execute_done do
+      t.on_call_done do
         @session << t
       end
     end
@@ -180,10 +124,10 @@ class App
   
     checkout_task = Task.new do |t|
       t.date = DateQuery.new
-      t.name = TextQuery.new("Your name")
-      t.confirm
-      t.on_execute_done do
-        @session = []
+      t.name = Query.new("Your name")
+      t.on_call_done do
+        confirmed = ask("Confirm (y|n)")
+        @session = [] if confirmed == 'y'
       end
     end
     
@@ -203,10 +147,10 @@ class App
       "View Order"    => view_order_task,
       "Checkout"      => checkout_task,
       "Exit"          => ->{ exit }
-    })
+    }, true)
     
     puts "Give up to your hunger!"
-    CommandLoop.new(main_menu).execute
+    CommandLoop.new(main_menu).call
   end
 end
 

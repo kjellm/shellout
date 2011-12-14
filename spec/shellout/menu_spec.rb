@@ -39,5 +39,6 @@ EOT
 EOT
   end
     
+  it "should handle a zero item"
 
 end

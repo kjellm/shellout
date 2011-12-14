@@ -1,4 +1,4 @@
-#@announce
+@announce
 Feature: View ordered dishes
   As a user
   I want to be able to see what I have ordered
