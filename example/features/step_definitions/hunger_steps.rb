@@ -21,7 +21,7 @@ Then /^I shall see the main menu$/ do
      3. Desserts
      4. View Order
      5. Checkout
-     6. Exit
+     0. Exit
     """
     }
 end
