@@ -1,31 +1,32 @@
 require 'stringio'
 require 'shellout'
 
-describe Shellout::Menu do
+module Shellout
+  describe Menu do
 
-  include Shellout
+    include Shellout
 
-  before(:each) do
-    @out = StringIO.new
-  end
+    before(:each) do
+      @out = StringIO.new
+    end
 
-  it "should work for a basic example" do
-    Menu(%w(a b c)).print(@out)
-    @out.string.should == <<EOT
+    it "should work for a basic example" do
+      Menu(%w(a b c)).print(@out)
+      @out.string.should == <<EOT
  1. a
  2. b
  3. c
 EOT
-  end
+    end
 
-  it "should print nothing when no items are given" do
-    Menu([]).print(@out)
-    @out.string.should == ''
-  end
+    it "should print nothing when no items are given" do
+      Menu([]).print(@out)
+      @out.string.should == ''
+    end
 
-  it "should right justify the menu item number" do
-    Menu(('a'..'j').to_a).print(@out)
-    @out.string.should == <<EOT
+    it "should right justify the menu item number" do
+      Menu(('a'..'j').to_a).print(@out)
+      @out.string.should == <<EOT
   1. a
   2. b
   3. c
@@ -37,8 +38,17 @@ EOT
   9. i
  10. j
 EOT
-  end
+    end
     
-  it "should handle a zero item"
-
+    it "should put the zero item last, prefixed by a '0.'" do
+        Menu(%w(a b c), 'd').print(@out)
+        @out.string.should == <<EOT
+ 1. a
+ 2. b
+ 3. c
+ 0. d
+EOT
+    end
+  
+  end
 end
