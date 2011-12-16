@@ -10,7 +10,6 @@ module Shellout
       yield self if block_given?
     end
   
-    # A cute way to add sub tasks
     def method_missing(name, *args)
       super unless name =~ /=$/
       add_sub_task(name.to_s.chop, args.first)

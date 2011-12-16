@@ -7,6 +7,8 @@ group :development do
   gem "guard"
   gem "guard-rspec"
   gem "rake"
+  gem "cucumber"
+  gem "aruba"
 
   if RUBY_PLATFORM.downcase.include?("darwin")
     gem 'rb-fsevent'

@@ -1,33 +1,15 @@
 #!/usr/bin/env ruby
 
 require 'shellout'
+require 'shellout/command_loop'
 require 'shellout/date_query'
 require 'shellout/menu_query'
 require 'shellout/task'
 require 'shellout/query'
 
-include Shellout
-
-class CommandLoop
-  
-  def initialize(menu)
-    @menu = menu
-  end
-  
-  def call
-    loop do
-      begin
-        task = @menu.call
-        task.call
-      rescue Interrupt    # ^C
-        puts              # Add a new line in case we are prompting
-      end
-    end
-  end
-  
-end
-
 class App
+
+  include Shellout
 
   def initialize
     @session = []
@@ -75,7 +57,7 @@ class App
       "Checkout"      => checkout_task,
       "Exit"          => ->{ exit }
     }
-    main_menu = Shellout::MenuQuery.new(main_menu_items, true)
+    main_menu = MenuQuery.new(main_menu_items, true)
     
     puts "Give up to your hunger!"
     CommandLoop.new(main_menu).call
