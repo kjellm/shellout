@@ -28,7 +28,7 @@ module Shellout
 
     def ask
       return @items.values[0] if only_one_option?
-      answer = @prompt_class.new.call.to_i
+      answer = @prompt_class.new('', 1).call.to_i
       return nil if answer < 0
       return nil if answer == 0 and !@has_a_zero_item
       index = (@has_a_zero_item and answer == "0") ? -1 : answer.to_i-1
