@@ -92,18 +92,18 @@ Usage
       "Might as well choose this one",
     ]).print
     
-    #  1. Do this
-    #  2. No, this
-    #  3. Or, maybe this
-    #  4. Forget it, this is the right choice
-    #  5. Amazing things will happen if you choose this
-    #  6. Ignore #5. Pick me!
-    #  7. I'm the obvious choice
-    #  8. There is no end to the awesomeness that will come from choosing this
-    #  9. Don't choose this
-    # 10. Or this
-    # 11. Things are getting worse
-    # 12. Might as well choose this one
+      1. Do this
+      2. No, this
+      3. Or, maybe this
+      4. Forget it, this is the right choice
+      5. Amazing things will happen if you choose this
+      6. Ignore #5. Pick me!
+      7. I'm the obvious choice
+      8. There is no end to the awesomeness that will come from choosing this
+      9. Don't choose this
+     10. Or this
+     11. Things are getting worse
+     12. Might as well choose this one
 
 Bugs
 ----
@@ -114,7 +114,7 @@ Report bugs to <http://github.com/kjellm/shellout/issues>
 Author
 ------
 
-Kjell-Magne Øierud &lt;kjellm AT acm DOT org&gt;
+Kjell-Magne Øierud &lt;kjellm AT oierud DOT net&gt;
 
 
 License
@@ -122,7 +122,7 @@ License
 
 (The MIT License)
 
-Copyright © 2011 Kjell-Magne Øierud
+Copyright © 2011-2013 Kjell-Magne Øierud
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of this software and
 associated documentation files (the ‘Software’), to deal in the Software without restriction, including
