@@ -59,7 +59,7 @@ class App
     }
     main_menu = MenuQuery.new(main_menu_items, true)
     
-    puts "Give up to your hunger!"
+    Shadowbox("Give up to your hunger!").print
     CommandLoop.new(main_menu).call
   end
 end
