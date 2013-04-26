@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 require 'shellout/query'
 require 'shellout/date'
 
@@ -10,7 +11,7 @@ module Shellout
    
     def call
       loop do
-        date = ask
+        date = super
         return date if date
       end
     end
@@ -42,7 +43,7 @@ Accepted input formats:
   (YY)?YY-M?M-D?D - FIXME
 
 EOT
-       Calendar().print3
+       Shellout::Calendar.new.print3
     end
 
   end

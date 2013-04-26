@@ -14,7 +14,7 @@ module Shellout
     end
 
     def call
-      answer = ask(@question)
+      answer = ask
       return answer == '' ? @default : answer
     end
     
@@ -22,8 +22,8 @@ module Shellout
     
     def bold(text); "\e[1m#{text}\e[0m"; end
 
-    def ask(question='')
-      answer = @io.readline(bold("#{question}> "), true)
+    def ask
+      answer = @io.readline(bold("#{@question}> "), true)
       answer.strip
     end
     
