@@ -48,6 +48,35 @@ Mo Tu We Th Fr Sa Su
 EOC
     end
 
+    it 'should highlight todays date if calendar is todays month' do
+      Calendar().print(@out)
+      res = @out.string.gsub(/\s+\n/, "\n")
+      res.should == <<EOC
+    October 2011
+Mo Tu We Th Fr Sa Su
+                1  2
+ 3  4  5  6  7  8  9
+10 11 12 13 14 15 16
+17 18 19 20 21 22 23
+24 25 26 27 28 29 \e[7m30\e[0m
+31
+EOC
+    end
+
+    it 'should not highlight todays date if calendar is todays month, but not the same year' do
+      Calendar(Date.new(2012, 10, 30)).print(@out)
+      res = @out.string.gsub(/\s+\n/, "\n")
+      res.should == <<EOC
+    October 2012
+Mo Tu We Th Fr Sa Su
+ 1  2  3  4  5  6  7
+ 8  9 10 11 12 13 14
+15 16 17 18 19 20 21
+22 23 24 25 26 27 28
+29 30 31
+EOC
+    end
+
   describe 'print3' do
     it 'should print the months before, at given, and after. Year on a separate line' do
       Calendar(Date.new(2011, 8)).print3(@out)
