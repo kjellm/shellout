@@ -16,7 +16,6 @@ Gem::Specification.new do |s|
   s.test_files    = `git ls-files -- spec/*`.split("\n")
   s.require_paths = ["lib"]
 
-  s.add_development_dependency "bundler", '0.5.3'
   s.add_development_dependency "rspec", '2.14.1'
   s.add_development_dependency "guard", '1.8.2'
   s.add_development_dependency "guard-rspec", '3.0.2'
