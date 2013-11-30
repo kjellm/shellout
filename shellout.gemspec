@@ -16,5 +16,16 @@ Gem::Specification.new do |s|
   s.test_files    = `git ls-files -- spec/*`.split("\n")
   s.require_paths = ["lib"]
 
-  s.add_development_dependency "bundler"
+  s.add_development_dependency "bundler", '0.5.3'
+  s.add_development_dependency "rspec", '2.14.1'
+  s.add_development_dependency "guard", '1.8.2'
+  s.add_development_dependency "guard-rspec", '3.0.2'
+  s.add_development_dependency "rake", '10.1.0'
+  s.add_development_dependency "cucumber", '1.3.10'
+  s.add_development_dependency "aruba", '0.5.3'
+
+  if RUBY_PLATFORM.downcase.include?("darwin")
+    s.add_development_dependency 'rb-fsevent'
+    s.add_development_dependency 'growl_notify'
+  end
 end
