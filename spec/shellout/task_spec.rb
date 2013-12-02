@@ -5,8 +5,8 @@ module Shellout
   describe Task do
 
     it "should execute it's sub tasks" do
-      st1 = mock('subtask1')
-      st2 = mock('subtask2')
+      st1 = double('subtask1')
+      st2 = double('subtask2')
       [st1, st2].each {|st| st.should_receive(:call)}
 
       task = Task.new do |t|
@@ -17,7 +17,7 @@ module Shellout
     end
 
     it "should call the on_call_done callback when all sub tasks are done executing" do
-      callback = mock('callback')
+      callback = double('callback')
       callback.should_receive(:call)
       t = Task.new
       t.on_call_done = callback

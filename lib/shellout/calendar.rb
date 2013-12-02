@@ -63,7 +63,7 @@ module Shellout
       # FIXME: UGLY!!!
       foo = dates.map do |for_date|
         bar = days(for_date)
-        if is_current_month?(for_date)
+        if is_current_month?(for_date) && is_current_year?(for_date)
           bar.map! {|d| d == Date.today.day  ? ansi_reverse_color(d) : d}
         end
         bar
@@ -89,6 +89,10 @@ module Shellout
     
     def is_current_month?(date)
       Date.today.month == date.month
+    end
+    
+    def is_current_year?(date)
+      Date.today.year == date.year
     end
     
     def days(for_date)
