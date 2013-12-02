@@ -1,3 +1,8 @@
+2013-12-02: version 0.5
+
+ - Fixed a bug in the calendar causing it to highlight a date in the
+   future that has the same month and day in month as today.
+
 2011-12-03: version 0.4
 
  - Added a class for printing menus
